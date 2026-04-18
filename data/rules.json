@@ -1,0 +1,99 @@
+{
+  "pass": {
+    "base_success": 70,
+    "stat_weight": 0.4,
+    "distance_penalty_per_meter": 0.8,
+    "pressure_penalty": 15,
+    "power_penalty_factor": 0.10,
+    "error_max_radians": 0.35,
+    "trait_bonus": {
+      "vision": 5,
+      "composure": 3,
+      "through_ball": 8
+    }
+  },
+  "shot": {
+    "base_success": 35,
+    "stat_weight": 0.5,
+    "distance_penalty_per_meter": 1.5,
+    "pressure_penalty": 20,
+    "angle_penalty_factor": 0.3,
+    "trait_bonus": {
+      "clinical": 10,
+      "composure": 5,
+      "off_the_ball": 3
+    }
+  },
+  "tackle": {
+    "base_success": 45,
+    "stat_weight": 0.4,
+    "distance_factor": 0.5,
+    "card_risk": {
+      "yellow": 12,
+      "red": 2
+    },
+    "injury_risk_base": 3,
+    "trait_bonus": {
+      "tackling": 10,
+      "aggression": 5,
+      "marking": 3
+    }
+  },
+  "dribble": {
+    "base_success": 40,
+    "stat_weight": 0.5,
+    "defender_penalty": 0.3,
+    "trait_bonus": {
+      "dribbler": 12,
+      "speed": 5,
+      "composure": 3
+    }
+  },
+  "header": {
+    "base_success": 35,
+    "stat_weight": 0.4,
+    "trait_bonus": {
+      "aerial_threat": 15,
+      "strength": 5,
+      "off_the_ball": 3
+    }
+  },
+  "interception": {
+    "base_success": 30,
+    "stat_weight": 0.3,
+    "positioning_weight": 0.3,
+    "trait_bonus": {
+      "marking": 8,
+      "vision": 5,
+      "tackling": 3
+    }
+  },
+  "foul": {
+    "base_chance": 8,
+    "aggression_factor": 0.15,
+    "fatigue_factor": 0.10,
+    "card_escalation": {
+      "existing_yellow_red_chance": 5,
+      "repeated_foul_yellow_chance": 25
+    }
+  },
+  "injury": {
+    "base_chance": 3,
+    "foul_multiplier": 2.5,
+    "fatigue_multiplier": 1.5,
+    "severity_weights": {
+      "1": 50,
+      "2": 25,
+      "3": 15,
+      "4": 8,
+      "5": 2
+    },
+    "games_out_by_severity": {
+      "1": [0, 1],
+      "2": [1, 3],
+      "3": [3, 6],
+      "4": [6, 12],
+      "5": [12, 30]
+    }
+  }
+}

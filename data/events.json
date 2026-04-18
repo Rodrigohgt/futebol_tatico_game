@@ -1,0 +1,57 @@
+{
+  "goal": {
+    "templates": [
+      "{scorer} marca! {home} {home_score} x {away_score} {away}",
+      "GOOOOL! {scorer} balança as redes!",
+      "{scorer} não perdoa e amplia o placar!",
+      "Assistência de {assister}, {scorer} completa para o gol!"
+    ]
+  },
+  "card_yellow": {
+    "templates": [
+      "Cartão amarelo para {player}. Falta dura.",
+      "{player} recebe o amarelo por jogo perigoso.",
+      "O árbitro mostra o amarelo para {player}."
+    ]
+  },
+  "card_red": {
+    "templates": [
+      "CARTÃO VERMELHO! {player} é expulso!",
+      "{player} recebe o vermelho direto. Time com um a menos.",
+      "Expulsão! {player} sai de campo."
+    ]
+  },
+  "injury": {
+    "templates": [
+      "{player} sai lesionado. Problema muscular.",
+      "Lesão para {player}! Será substituído.",
+      "{player} não consegue continuar. Preocupação no banco."
+    ]
+  },
+  "foul": {
+    "templates": [
+      "Falta de {fouler} sobre {victim}.",
+      "{fouler} derruba {victim}. Falta marcada.",
+      "Jogo parado. {fouler} comete infração sobre {victim}."
+    ]
+  },
+  "save": {
+    "templates": [
+      "Defesaça do goleiro! {keeper} salva o time.",
+      "{keeper} faz grande defesa!",
+      "O chute de {shooter} é parado por {keeper}."
+    ]
+  },
+  "pass_success": {
+    "templates": [
+      "{passer} toca para {receiver}.",
+      "Boa troca de passes. {passer} encontra {receiver}."
+    ]
+  },
+  "pass_fail": {
+    "templates": [
+      "Passe errado de {passer}! A bola se perde.",
+      "{passer} tenta o passe mas não encontra ninguém."
+    ]
+  }
+}

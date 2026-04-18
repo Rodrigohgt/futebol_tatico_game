@@ -1,0 +1,57 @@
+{
+  "ball": {
+    "radius": 6,
+    "friction": 0.96,
+    "min_speed": 0.3,
+    "carry_offset": 18,
+    "pickup_radius": 22,
+    "bounce_damping": 0.4
+  },
+  "pass": {
+    "min_speed": 3.0,
+    "max_speed": 12.0,
+    "charge_speed": 0.012,
+    "free_passes_per_turn": 2,
+    "quick_click_threshold": 0.05
+  },
+  "movement": {
+    "player_speed": 4.5,
+    "player_radius": 14,
+    "max_move_meters": 15.0,
+    "boundary_padding": 4,
+    "moves_per_turn": 2
+  },
+  "ai": {
+    "moves_per_turn": 11,
+    "passes_per_turn": 2,
+    "gk_zone_depth": 14.0,
+    "gk_zone_width": 20.0,
+    "gk_advance_factor": 0.85,
+    "gk_dead_zone_px": 8
+  },
+  "fatigue": {
+    "per_move": 1.5,
+    "per_pass": 0.5,
+    "per_sprint": 3.0,
+    "recovery_per_turn_bench": 2.0,
+    "recovery_between_matches": 25.0,
+    "exhaustion_threshold": 20.0,
+    "stat_penalty_per_10_fatigue": 2
+  },
+  "morale": {
+    "goal_scored_boost": 8.0,
+    "goal_conceded_drop": 5.0,
+    "win_boost": 10.0,
+    "loss_drop": 8.0,
+    "draw_change": -1.0,
+    "card_drop": 3.0,
+    "injury_drop": 5.0,
+    "decay_per_match": 1.0,
+    "min": 0.0,
+    "max": 100.0
+  },
+  "turns": {
+    "turns_per_half": 45,
+    "halves": 2
+  }
+}

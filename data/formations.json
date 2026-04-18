@@ -1,0 +1,104 @@
+{
+  "4-3-3": {
+    "label": "4-3-3",
+    "description": "Formação equilibrada com três atacantes",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "LB",  "x": 18.0, "y": 10.0},
+      {"position": "CB",  "x": 15.0, "y": 24.0},
+      {"position": "CB",  "x": 15.0, "y": 44.0},
+      {"position": "RB",  "x": 18.0, "y": 58.0},
+      {"position": "CM",  "x": 32.0, "y": 20.0},
+      {"position": "CDM", "x": 28.0, "y": 34.0},
+      {"position": "CM",  "x": 32.0, "y": 48.0},
+      {"position": "LW",  "x": 42.0, "y": 12.0},
+      {"position": "ST",  "x": 45.0, "y": 34.0},
+      {"position": "RW",  "x": 42.0, "y": 56.0}
+    ]
+  },
+  "4-3-3_kickoff": {
+    "label": "4-3-3 (Saída de Bola)",
+    "description": "Posição de saída de bola com o ST no centro",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "LB",  "x": 30.0, "y": 10.0},
+      {"position": "CB",  "x": 28.0, "y": 24.0},
+      {"position": "CB",  "x": 28.0, "y": 44.0},
+      {"position": "RB",  "x": 30.0, "y": 58.0},
+      {"position": "CM",  "x": 46.0, "y": 20.0},
+      {"position": "CDM", "x": 44.0, "y": 34.0},
+      {"position": "CM",  "x": 46.0, "y": 48.0},
+      {"position": "LW",  "x": 51.0, "y": 14.0},
+      {"position": "ST",  "x": 52.5, "y": 34.0},
+      {"position": "RW",  "x": 51.0, "y": 54.0}
+    ]
+  },
+  "4-4-2": {
+    "label": "4-4-2",
+    "description": "Formação clássica com dois atacantes",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "LB",  "x": 18.0, "y": 10.0},
+      {"position": "CB",  "x": 15.0, "y": 24.0},
+      {"position": "CB",  "x": 15.0, "y": 44.0},
+      {"position": "RB",  "x": 18.0, "y": 58.0},
+      {"position": "LW",  "x": 35.0, "y": 10.0},
+      {"position": "CM",  "x": 30.0, "y": 26.0},
+      {"position": "CM",  "x": 30.0, "y": 42.0},
+      {"position": "RW",  "x": 35.0, "y": 58.0},
+      {"position": "ST",  "x": 42.0, "y": 28.0},
+      {"position": "ST",  "x": 42.0, "y": 40.0}
+    ]
+  },
+  "3-5-2": {
+    "label": "3-5-2",
+    "description": "Três zagueiros com alas e dois atacantes",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "CB",  "x": 15.0, "y": 17.0},
+      {"position": "CB",  "x": 13.0, "y": 34.0},
+      {"position": "CB",  "x": 15.0, "y": 51.0},
+      {"position": "LB",  "x": 30.0, "y": 6.0},
+      {"position": "CM",  "x": 28.0, "y": 24.0},
+      {"position": "CDM", "x": 25.0, "y": 34.0},
+      {"position": "CM",  "x": 28.0, "y": 44.0},
+      {"position": "RB",  "x": 30.0, "y": 62.0},
+      {"position": "ST",  "x": 42.0, "y": 26.0},
+      {"position": "ST",  "x": 42.0, "y": 42.0}
+    ]
+  },
+  "4-2-3-1": {
+    "label": "4-2-3-1",
+    "description": "Dois volantes e um meia armador atrás do centroavante",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "LB",  "x": 18.0, "y": 10.0},
+      {"position": "CB",  "x": 15.0, "y": 24.0},
+      {"position": "CB",  "x": 15.0, "y": 44.0},
+      {"position": "RB",  "x": 18.0, "y": 58.0},
+      {"position": "CDM", "x": 26.0, "y": 28.0},
+      {"position": "CDM", "x": 26.0, "y": 40.0},
+      {"position": "LW",  "x": 38.0, "y": 12.0},
+      {"position": "CAM", "x": 36.0, "y": 34.0},
+      {"position": "RW",  "x": 38.0, "y": 56.0},
+      {"position": "ST",  "x": 44.0, "y": 34.0}
+    ]
+  },
+  "5-3-2": {
+    "label": "5-3-2",
+    "description": "Bloco defensivo com cinco na defesa",
+    "slots": [
+      {"position": "GK",  "x": 5.0,  "y": 34.0},
+      {"position": "LB",  "x": 20.0, "y": 6.0},
+      {"position": "CB",  "x": 14.0, "y": 20.0},
+      {"position": "CB",  "x": 12.0, "y": 34.0},
+      {"position": "CB",  "x": 14.0, "y": 48.0},
+      {"position": "RB",  "x": 20.0, "y": 62.0},
+      {"position": "CM",  "x": 30.0, "y": 20.0},
+      {"position": "CM",  "x": 28.0, "y": 34.0},
+      {"position": "CM",  "x": 30.0, "y": 48.0},
+      {"position": "ST",  "x": 42.0, "y": 26.0},
+      {"position": "ST",  "x": 42.0, "y": 42.0}
+    ]
+  }
+}

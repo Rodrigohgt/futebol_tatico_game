@@ -1,0 +1,134 @@
+{
+  "aerial_threat": {
+    "label": "Ameaça Aérea",
+    "description": "Domínio no jogo aéreo, cabeceios e disputas",
+    "stat_bonuses": {"heading": 8},
+    "context_bonuses": {"corner_attack": 10, "cross_header": 10}
+  },
+  "hold_up_play": {
+    "label": "Jogo de Pivô",
+    "description": "Protege a bola de costas e distribui",
+    "stat_bonuses": {"composure": 5},
+    "context_bonuses": {"hold_ball": 15, "pass_under_pressure": 5}
+  },
+  "vision": {
+    "label": "Visão de Jogo",
+    "description": "Enxerga passes que outros não veem",
+    "stat_bonuses": {"vision": 8, "passing": 3},
+    "context_bonuses": {"through_ball": 12, "long_pass": 8}
+  },
+  "composure": {
+    "label": "Frieza",
+    "description": "Mantém a calma sob pressão extrema",
+    "stat_bonuses": {"composure": 10},
+    "context_bonuses": {"penalty": 15, "one_on_one": 10}
+  },
+  "clinical": {
+    "label": "Clínico",
+    "description": "Converte chances com eficiência letal",
+    "stat_bonuses": {"finishing": 8},
+    "context_bonuses": {"shot_conversion": 12}
+  },
+  "speed": {
+    "label": "Velocidade",
+    "description": "Explosão de velocidade em arrancadas curtas",
+    "stat_bonuses": {"pace": 8},
+    "context_bonuses": {"counter_attack": 10, "chase_ball": 8}
+  },
+  "dribbler": {
+    "label": "Driblador",
+    "description": "Passes de um contra um com facilidade",
+    "stat_bonuses": {"dribbling": 8},
+    "context_bonuses": {"dribble_past": 12}
+  },
+  "crosser": {
+    "label": "Cruzador",
+    "description": "Cruzamentos precisos de ambos os lados",
+    "stat_bonuses": {"passing": 5},
+    "context_bonuses": {"cross_accuracy": 15}
+  },
+  "tackling": {
+    "label": "Desarme",
+    "description": "Timing preciso em carrinho e dividida",
+    "stat_bonuses": {"defending": 8},
+    "context_bonuses": {"tackle_success": 12, "interception": 5}
+  },
+  "aggression": {
+    "label": "Agressividade",
+    "description": "Intensidade nas disputas, risco de falta",
+    "stat_bonuses": {"defending": 3},
+    "context_bonuses": {"tackle_success": 8, "foul_risk": 10}
+  },
+  "marking": {
+    "label": "Marcação",
+    "description": "Cola no adversário, difícil de escapar",
+    "stat_bonuses": {"positioning": 5, "defending": 3},
+    "context_bonuses": {"man_marking": 15}
+  },
+  "engine": {
+    "label": "Motor",
+    "description": "Resistência excepcional, corre os 90 minutos",
+    "stat_bonuses": {"stamina": 10},
+    "context_bonuses": {"fatigue_resistance": 15}
+  },
+  "leadership": {
+    "label": "Liderança",
+    "description": "Inspira companheiros, mantém o moral alto",
+    "stat_bonuses": {"composure": 3},
+    "context_bonuses": {"team_morale": 10, "pressure_resistance": 5}
+  },
+  "through_ball": {
+    "label": "Bola Enfiada",
+    "description": "Especialista em passes verticais entre linhas",
+    "stat_bonuses": {"passing": 5, "vision": 5},
+    "context_bonuses": {"through_ball": 15}
+  },
+  "off_the_ball": {
+    "label": "Movimentação",
+    "description": "Busca espaços e se desmarca com inteligência",
+    "stat_bonuses": {"positioning": 8},
+    "context_bonuses": {"run_behind": 12, "space_creation": 8}
+  },
+  "strength": {
+    "label": "Força Física",
+    "description": "Difícil de derrubar, vence disputas de corpo",
+    "stat_bonuses": {"stamina": 3},
+    "context_bonuses": {"hold_ball": 10, "aerial_duel": 8}
+  },
+  "overlap": {
+    "label": "Projeção",
+    "description": "Sobe pela lateral com frequência e energia",
+    "stat_bonuses": {"pace": 3, "stamina": 5},
+    "context_bonuses": {"overlap_run": 12}
+  },
+  "reflexes": {
+    "label": "Reflexos",
+    "description": "Reações instantâneas em defesas difíceis",
+    "stat_bonuses": {"composure": 5},
+    "context_bonuses": {"shot_save": 15, "penalty_save": 8}
+  },
+  "command_area": {
+    "label": "Comando de Área",
+    "description": "Domina a área, saídas em cruzamentos",
+    "stat_bonuses": {"positioning": 5},
+    "context_bonuses": {"cross_claim": 15, "aerial_duel": 10}
+  },
+  "sweeper": {
+    "label": "Líbero Moderno",
+    "description": "Saídas agressivas para cortar bolas longas",
+    "stat_bonuses": {"pace": 5, "positioning": 3},
+    "context_bonuses": {"sweeper_rush": 12}
+  },
+  "distribution": {
+    "label": "Distribuição",
+    "description": "Inicia jogadas com passes precisos do fundo",
+    "stat_bonuses": {"passing": 8},
+    "context_bonuses": {"goal_kick_accuracy": 12, "throw_accuracy": 10}
+  },
+  "one_on_one": {
+    "label": "Um contra Um",
+    "description": "Especialista em situações de mano a mano",
+    "stat_bonuses": {"composure": 5},
+    "context_bonuses": {"one_on_one_save": 15}
+  }
+}

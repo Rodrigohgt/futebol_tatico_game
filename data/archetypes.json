@@ -1,0 +1,112 @@
+{
+  "target_man": {
+    "label": "Target Man",
+    "description": "Centroavante físico, referência aérea e pivô de área",
+    "allowed_positions": ["ST", "CF"],
+    "base_stats": {
+      "finishing": 75, "passing": 45, "pace": 40, "dribbling": 40,
+      "defending": 30, "heading": 85, "stamina": 60, "composure": 65,
+      "positioning": 75, "vision": 40
+    },
+    "trait_affinity": ["aerial_threat", "hold_up_play", "strength"]
+  },
+  "playmaker": {
+    "label": "Playmaker",
+    "description": "Meia criativo, visão de jogo excepcional e passes decisivos",
+    "allowed_positions": ["CAM", "CM"],
+    "base_stats": {
+      "finishing": 45, "passing": 85, "pace": 50, "dribbling": 70,
+      "defending": 35, "heading": 35, "stamina": 55, "composure": 75,
+      "positioning": 60, "vision": 90
+    },
+    "trait_affinity": ["vision", "composure", "through_ball"]
+  },
+  "box_to_box": {
+    "label": "Box-to-Box",
+    "description": "Meio-campista completo, presente no ataque e na defesa",
+    "allowed_positions": ["CM", "CDM"],
+    "base_stats": {
+      "finishing": 55, "passing": 65, "pace": 65, "dribbling": 55,
+      "defending": 65, "heading": 55, "stamina": 85, "composure": 60,
+      "positioning": 60, "vision": 55
+    },
+    "trait_affinity": ["engine", "leadership", "tackling"]
+  },
+  "poacher": {
+    "label": "Poacher",
+    "description": "Goleador oportunista, letal dentro da área",
+    "allowed_positions": ["ST", "CF"],
+    "base_stats": {
+      "finishing": 90, "passing": 35, "pace": 60, "dribbling": 50,
+      "defending": 20, "heading": 60, "stamina": 55, "composure": 80,
+      "positioning": 85, "vision": 40
+    },
+    "trait_affinity": ["clinical", "off_the_ball", "composure"]
+  },
+  "winger": {
+    "label": "Winger",
+    "description": "Ponta veloz, dribles e cruzamentos",
+    "allowed_positions": ["LW", "RW"],
+    "base_stats": {
+      "finishing": 55, "passing": 60, "pace": 85, "dribbling": 80,
+      "defending": 30, "heading": 35, "stamina": 65, "composure": 50,
+      "positioning": 55, "vision": 55
+    },
+    "trait_affinity": ["speed", "dribbler", "crosser"]
+  },
+  "ball_winner": {
+    "label": "Ball Winner",
+    "description": "Volante destruidor, desarmes e interceptações",
+    "allowed_positions": ["CDM", "CM", "CB"],
+    "base_stats": {
+      "finishing": 30, "passing": 50, "pace": 55, "dribbling": 35,
+      "defending": 85, "heading": 65, "stamina": 75, "composure": 60,
+      "positioning": 70, "vision": 45
+    },
+    "trait_affinity": ["tackling", "aggression", "marking"]
+  },
+  "sweeper_keeper": {
+    "label": "Sweeper Keeper",
+    "description": "Goleiro moderno, saída de jogo e passes longos",
+    "allowed_positions": ["GK"],
+    "base_stats": {
+      "finishing": 10, "passing": 55, "pace": 40, "dribbling": 20,
+      "defending": 45, "heading": 15, "stamina": 50, "composure": 70,
+      "positioning": 65, "vision": 55
+    },
+    "trait_affinity": ["sweeper", "distribution", "composure"]
+  },
+  "traditional_keeper": {
+    "label": "Traditional Keeper",
+    "description": "Goleiro clássico, reflexos e posicionamento",
+    "allowed_positions": ["GK"],
+    "base_stats": {
+      "finishing": 5, "passing": 35, "pace": 30, "dribbling": 10,
+      "defending": 50, "heading": 15, "stamina": 45, "composure": 75,
+      "positioning": 80, "vision": 40
+    },
+    "trait_affinity": ["reflexes", "command_area", "one_on_one"]
+  },
+  "full_back": {
+    "label": "Full-back",
+    "description": "Lateral ofensivo com projeção e cruzamentos",
+    "allowed_positions": ["LB", "RB"],
+    "base_stats": {
+      "finishing": 35, "passing": 60, "pace": 75, "dribbling": 55,
+      "defending": 65, "heading": 45, "stamina": 80, "composure": 50,
+      "positioning": 60, "vision": 50
+    },
+    "trait_affinity": ["overlap", "crosser", "engine"]
+  },
+  "stopper": {
+    "label": "Stopper",
+    "description": "Zagueiro agressivo, combativo e forte no jogo aéreo",
+    "allowed_positions": ["CB"],
+    "base_stats": {
+      "finishing": 25, "passing": 40, "pace": 50, "dribbling": 25,
+      "defending": 85, "heading": 80, "stamina": 65, "composure": 55,
+      "positioning": 70, "vision": 35
+    },
+    "trait_affinity": ["aerial_threat", "aggression", "marking"]
+  }
+}
