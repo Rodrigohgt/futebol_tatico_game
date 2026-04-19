@@ -12,6 +12,7 @@ from config import settings
 from screens.screen_manager import ScreenManager
 from screens.main_menu_screen import MainMenuScreen
 from screens.match_screen import MatchScreen
+from screens.pre_match_screen import PreMatchScreen
 
 
 def main():
@@ -25,6 +26,7 @@ def main():
     # Screen manager
     sm = ScreenManager()
     sm.register("main_menu", MainMenuScreen(sm))
+    sm.register("pre_match", PreMatchScreen(sm))
     sm.register("match", MatchScreen(sm))
     sm.switch("main_menu")
 

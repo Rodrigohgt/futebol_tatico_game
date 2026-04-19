@@ -17,7 +17,7 @@ class MainMenuScreen(Screen):
         self._font_option = None
         self._font_sub = None
         self._options = [
-            ("Jogar Partida", "match"),
+            ("Jogar Partida", "pre_match"),
             ("Sair", "quit"),
         ]
         self._selected = 0
@@ -99,10 +99,10 @@ class MainMenuScreen(Screen):
 
     def _activate(self):
         _, action = self._options[self._selected]
-        if action == "match":
-            self._sm.switch("match")
-        elif action == "quit":
+        if action == "quit":
             pygame.event.post(pygame.event.Event(pygame.QUIT))
+        else:
+            self._sm.switch(action)
 
     def _check_mouse_click(self, pos):
         rects = getattr(self, '_options_rects', [])
