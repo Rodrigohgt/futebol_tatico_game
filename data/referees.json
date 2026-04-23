@@ -1,0 +1,55 @@
+{
+  "names": [
+    "Anderson Silva",
+    "Bruno Arleu",
+    "Raphael Claus",
+    "Wilton Sampaio",
+    "Ramon Abatti",
+    "Flavio Roberto",
+    "Braulio Machado",
+    "Leandro Vuaden",
+    "Wagner Reway",
+    "Marcelo de Lima",
+    "Caio Max Vieira",
+    "Paulo Roberto Alves",
+    "Denis da Silva",
+    "Jean Pierre Lima",
+    "Luiz Flavio de Oliveira",
+    "Edina Alves",
+    "Savio Pereira",
+    "Paulo Cesar Zanovelli",
+    "Diego Pombo Lopez",
+    "Jonathan Benkenstein",
+    "Rodrigo Jose Pereira",
+    "Felipe Fernandes",
+    "Maguielson Barbosa",
+    "Rafael Rodrigo Klein",
+    "Douglas Marques das Flores"
+  ],
+  "tiers": {
+    "elite": {
+      "count_range": [2, 4],
+      "strictness":  [55, 75],
+      "accuracy":    [75, 95],
+      "card_tendency": [40, 60],
+      "consistency": [70, 90],
+      "composure":   [75, 95]
+    },
+    "experienced": {
+      "count_range": [4, 8],
+      "strictness":  [40, 80],
+      "accuracy":    [55, 80],
+      "card_tendency": [30, 70],
+      "consistency": [50, 75],
+      "composure":   [55, 80]
+    },
+    "developing": {
+      "count_range": [4, 8],
+      "strictness":  [30, 85],
+      "accuracy":    [35, 65],
+      "card_tendency": [25, 80],
+      "consistency": [30, 55],
+      "composure":   [30, 60]
+    }
+  }
+}

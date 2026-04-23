@@ -439,6 +439,248 @@ class ClubCard:
 
 
 # ═══════════════════════════════════════════════════════════
+#  REFEREE CARD — card compacto para seleção de árbitro
+# ═══════════════════════════════════════════════════════════
+
+# Cores por tier de árbitro
+_TIER_COLORS = {
+    "FIFA": (255, 215, 0),       # dourado
+    "Série A": (160, 190, 220),  # prata-azulado
+    "Série B": (140, 140, 150),  # cinza
+}
+
+_TIER_COLORS_BG = {
+    "FIFA": (50, 45, 20),
+    "Série A": (30, 38, 50),
+    "Série B": (35, 35, 40),
+}
+
+
+class RefereeCard:
+    """Card compacto para seleção de árbitro na tela pré-partida."""
+
+    def __init__(
+        self,
+        rect: pygame.Rect,
+        referee,
+        *,
+        is_random: bool = False,
+    ):
+        self.rect = rect
+        self.referee = referee  # Referee | None (None se is_random)
+        self.is_random = is_random
+
+        self.selected = False
+        self._hovered = False
+        self._glow_alpha = 0.0
+
+        # Fontes lazy
+        self._font_name: pygame.font.Font | None = None
+        self._font_tier: pygame.font.Font | None = None
+        self._font_stat: pygame.font.Font | None = None
+
+    def handle_event(self, event: pygame.event.Event) -> bool:
+        """Retorna True se o card foi clicado."""
+        if event.type == pygame.MOUSEMOTION:
+            self._hovered = self.rect.collidepoint(event.pos)
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
+
+    def update(self, dt: float):
+        target = 1.0 if self.selected else 0.0
+        speed = 5.0
+        if self._glow_alpha < target:
+            self._glow_alpha = min(target, self._glow_alpha + speed * dt)
+        elif self._glow_alpha > target:
+            self._glow_alpha = max(target, self._glow_alpha - speed * dt)
+
+    def render(self, surface: pygame.Surface):
+        if self._font_name is None:
+            self._font_name = pygame.font.SysFont(None, 19, bold=True)
+            self._font_tier = pygame.font.SysFont(None, 16, bold=True)
+            self._font_stat = pygame.font.SysFont(None, 15)
+
+        # ── Fundo ──
+        if self.selected:
+            bg = UIColors.BG_CARD_SELECTED
+        elif self._hovered:
+            bg = UIColors.BG_CARD_HOVER
+        else:
+            bg = UIColors.BG_CARD
+
+        pygame.draw.rect(surface, bg, self.rect, border_radius=10)
+
+        # ── Borda ──
+        if self.selected and self.referee:
+            tier = self.referee.stats.tier_label
+            border_color = _TIER_COLORS.get(tier, UIColors.BORDER_SUBTLE)
+            border_w = 2
+        elif self.selected:
+            border_color = UIColors.BORDER_HIGHLIGHT
+            border_w = 2
+        elif self._hovered:
+            border_color = UIColors.BORDER_SUBTLE
+            border_w = 1
+        else:
+            border_color = UIColors.BORDER_SUBTLE
+            border_w = 1
+
+        pygame.draw.rect(
+            surface, border_color, self.rect,
+            width=border_w, border_radius=10,
+        )
+
+        # ── Glow de seleção ──
+        if self._glow_alpha > 0.01:
+            glow_surf = pygame.Surface(
+                (self.rect.width + 12, self.rect.height + 12), pygame.SRCALPHA,
+            )
+            if self.referee:
+                tier = self.referee.stats.tier_label
+                glow_base = _TIER_COLORS.get(tier, (100, 160, 255))
+            else:
+                glow_base = (100, 160, 255)
+            glow_color = (*glow_base[:3], int(25 * self._glow_alpha))
+            pygame.draw.rect(
+                glow_surf, glow_color, glow_surf.get_rect(), border_radius=14,
+            )
+            surface.blit(glow_surf, (self.rect.x - 6, self.rect.y - 6))
+
+        if self.is_random:
+            self._render_random(surface)
+        else:
+            self._render_referee(surface)
+
+    def _render_random(self, surface: pygame.Surface):
+        """Renderiza o card de opção aleatória."""
+        cx, cy = self.rect.centerx, self.rect.centery
+
+        # Ícone de dados (?)
+        icon_font = pygame.font.SysFont(None, 36, bold=True)
+        icon = icon_font.render("?", True, UIColors.TEXT_ACCENT)
+        icon_rect = icon.get_rect(centerx=cx, centery=cy - 12)
+        surface.blit(icon, icon_rect)
+
+        # Label
+        label = self._font_name.render("Aleatório", True, UIColors.TEXT_SECONDARY)
+        label_rect = label.get_rect(centerx=cx, centery=cy + 16)
+        surface.blit(label, label_rect)
+
+        # Indicador de seleção
+        if self.selected:
+            sel = self._font_stat.render(
+                "Selecionado", True, UIColors.TEXT_ACCENT,
+            )
+            sel_rect = sel.get_rect(centerx=cx, bottom=self.rect.bottom - 4)
+            surface.blit(sel, sel_rect)
+
+    def _render_referee(self, surface: pygame.Surface):
+        """Renderiza o card com dados do árbitro."""
+        ref = self.referee
+        if ref is None:
+            return
+
+        stats = ref.stats
+        tier = stats.tier_label
+        tier_color = _TIER_COLORS.get(tier, UIColors.TEXT_SECONDARY)
+        tier_bg = _TIER_COLORS_BG.get(tier, UIColors.BG_CARD)
+
+        x, y, w, h = self.rect.x, self.rect.y, self.rect.width, self.rect.height
+
+        # Badge de tier (topo do card)
+        badge_h = 20
+        badge_rect = pygame.Rect(x + 1, y + 1, w - 2, badge_h)
+        badge_surf = pygame.Surface((w - 2, badge_h), pygame.SRCALPHA)
+        pygame.draw.rect(
+            badge_surf, (*tier_bg, 200),
+            (0, 0, w - 2, badge_h),
+            border_top_left_radius=9, border_top_right_radius=9,
+        )
+        surface.blit(badge_surf, badge_rect.topleft)
+
+        tier_surf = self._font_tier.render(tier, True, tier_color)
+        tier_rect = tier_surf.get_rect(centerx=x + w // 2, centery=y + badge_h // 2 + 1)
+        surface.blit(tier_surf, tier_rect)
+
+        # Nome do árbitro
+        name_surf = self._font_name.render(ref.name, True, UIColors.TEXT_PRIMARY)
+        # Truncar se muito largo
+        if name_surf.get_width() > w - 12:
+            # Tenta com nome mais curto
+            parts = ref.name.split()
+            short = parts[0][0] + ". " + parts[-1] if len(parts) > 1 else ref.name[:12]
+            name_surf = self._font_name.render(short, True, UIColors.TEXT_PRIMARY)
+        name_rect = name_surf.get_rect(centerx=x + w // 2, top=y + badge_h + 6)
+        surface.blit(name_surf, name_rect)
+
+        # Linha divisória
+        div_y = y + badge_h + 28
+        pygame.draw.line(
+            surface, UIColors.DIVIDER,
+            (x + 10, div_y), (x + w - 10, div_y),
+        )
+
+        # Stats compactos
+        stat_y = div_y + 5
+        stat_pairs = [
+            ("RIG", stats.strictness),
+            ("PRE", stats.accuracy),
+            ("CAR", stats.card_tendency),
+        ]
+
+        for label, value in stat_pairs:
+            self._draw_stat_bar(surface, x + 8, stat_y, w - 16, label, value)
+            stat_y += 17
+
+        # Indicador de seleção
+        if self.selected:
+            sel = self._font_stat.render(
+                "Selecionado", True, tier_color,
+            )
+            sel_rect = sel.get_rect(centerx=x + w // 2, bottom=y + h - 3)
+            surface.blit(sel, sel_rect)
+
+    def _draw_stat_bar(self, surface, x, y, max_w, label, value):
+        """Desenha um stat com mini barra de progresso."""
+        # Label
+        lbl = self._font_stat.render(label, True, UIColors.TEXT_MUTED)
+        surface.blit(lbl, (x, y))
+
+        # Valor
+        val_color = UIColors.TEXT_PRIMARY if value >= 60 else UIColors.TEXT_SECONDARY
+        val_surf = self._font_stat.render(str(value), True, val_color)
+        surface.blit(val_surf, (x + max_w - val_surf.get_width(), y))
+
+        # Barra
+        bar_x = x + 30
+        bar_w = max_w - 55
+        bar_h = 4
+        bar_y = y + 8
+
+        # Fundo
+        pygame.draw.rect(
+            surface, (40, 44, 55),
+            (bar_x, bar_y, bar_w, bar_h), border_radius=2,
+        )
+        # Preenchimento
+        fill_w = int(bar_w * value / 100)
+        if value >= 70:
+            fill_color = (80, 200, 120)
+        elif value >= 45:
+            fill_color = (200, 180, 60)
+        else:
+            fill_color = (200, 80, 60)
+
+        if fill_w > 0:
+            pygame.draw.rect(
+                surface, fill_color,
+                (bar_x, bar_y, fill_w, bar_h), border_radius=2,
+            )
+
+
+# ═══════════════════════════════════════════════════════════
 #  PAUSE OVERLAY — menu de pausa modal
 # ═══════════════════════════════════════════════════════════
 

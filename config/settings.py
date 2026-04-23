@@ -137,3 +137,56 @@ AI_PASSES_PER_TURN = 2
 GK_ZONE_DEPTH = 14.0
 GK_ZONE_WIDTH = 20.0
 GK_ADVANCE_FACTOR = 0.85
+
+# ═══════════════════════════════════════════════════════════
+#  INTERCEPTAÇÃO — passes podem ser cortados em trânsito
+# ═══════════════════════════════════════════════════════════
+INTERCEPT_RADIUS = 25              # px — raio de detecção ao redor da bola
+INTERCEPT_BASE_CHANCE = 0.25       # chance base de interceptar
+INTERCEPT_DEFENDING_BONUS = 0.004  # bônus por ponto de defending (def 80 → +0.32 → ~57%)
+INTERCEPT_MAX_CHANCE = 0.60        # teto de chance
+INTERCEPT_COOLDOWN_FRAMES = 10     # frames de cooldown por jogador após falhar
+
+# ═══════════════════════════════════════════════════════════
+#  TACKLE — disputa física ao se aproximar do portador
+# ═══════════════════════════════════════════════════════════
+TACKLE_RADIUS = 22                 # px — distância para trigger de tackle
+TACKLE_BASE_CHANCE = 0.20          # chance base
+TACKLE_DEFENDING_BONUS = 0.005     # bônus por ponto de defending
+TACKLE_DRIBBLING_PENALTY = 0.004   # penalidade por ponto de dribbling do portador
+TACKLE_MAX_CHANCE = 0.55           # teto
+TACKLE_FOUL_CHANCE = 0.15          # chance de falta ao falhar
+
+# ═══════════════════════════════════════════════════════════
+#  CONTRA-ATAQUE — ações imediatas da IA ao recuperar bola
+# ═══════════════════════════════════════════════════════════
+COUNTER_ATTACK_BUDGET = 2          # ações imediatas da IA ao roubar bola
+
+# ═══════════════════════════════════════════════════════════
+#  IA ANIMADA — delay entre ações para visibilidade
+# ═══════════════════════════════════════════════════════════
+AI_ACTION_DELAY_MS = 250           # ms entre cada ação da IA na fase de turno
+AI_FAST_FORWARD_DELAY_MS = 50      # ms quando fast-forward está ativo
+
+# ═══════════════════════════════════════════════════════════
+#  PRESSING CONTEXTUAL — reações múltiplas em zona perigosa
+# ═══════════════════════════════════════════════════════════
+PRESSING_BOX_REACTIONS = 3         # rivais que reagem quando humano entra na área
+PRESSING_HALF_ADVANCE_REACTIONS = 2  # zagueiros que recuam ao avançar com bola
+
+# ═══════════════════════════════════════════════════════════
+#  ÁRBITRO — influência na marcação de faltas e cartões
+# ═══════════════════════════════════════════════════════════
+REFEREE_DEFAULT_TIER = None        # None = aleatório entre tiers
+REFEREE_YELLOW_TO_RED = 2          # amarelos para expulsão (segundo amarelo)
+REFEREE_FOUL_STOP_FRAMES = 30     # frames que o jogo "congela" após falta marcada
+REFEREE_CARD_STOP_FRAMES = 60     # frames que o jogo "congela" após cartão
+
+# ═══════════════════════════════════════════════════════════
+#  CAMPO DE VISÃO (FOV) — influência nos passes
+# ═══════════════════════════════════════════════════════════
+FOV_MIN_DEGREES = 90               # FOV mínimo possível (graus)
+FOV_MAX_DEGREES = 120              # FOV máximo possível (graus)
+FOV_DEFAULT_DEGREES = 100          # FOV base se não calculado por stats
+FOV_VISION_BONUS_PER_POINT = 0.3   # graus extras por ponto de vision acima de 50
+FOV_PASS_PENALTY_OUTSIDE = 0.20    # penalidade extra de accuracy fora do FOV (caso force passe)

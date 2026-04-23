@@ -37,6 +37,7 @@ class PlayerStats:
     composure: int = 50
     positioning: int = 50
     vision: int = 50
+    fov_degrees: int = 0  # 0 = calculado automaticamente via calc_fov()
 
     @classmethod
     def random(cls) -> PlayerStats:
@@ -51,6 +52,7 @@ class PlayerStats:
             composure=random.randint(40, 90),
             positioning=random.randint(35, 90),
             vision=random.randint(35, 90),
+            fov_degrees=0,  # será calculado via calc_fov()
         )
 
     @property
@@ -225,6 +227,56 @@ class Player:
         self.selected = False
         self.move_meters_remaining = self.max_move_meters
         self.target = self.pos.copy()
+
+    # ── Campo de Visão (FOV) ──
+
+    def calc_fov(self) -> float:
+        """Calcula o FOV efetivo em graus, baseado em stats e overrides.
+
+        Se fov_degrees foi definido explicitamente (> 0), usa diretamente.
+        Caso contrário calcula a partir de vision + settings.
+        Retorna valor clampado entre FOV_MIN e FOV_MAX.
+        """
+        if self.stats.fov_degrees > 0:
+            base = float(self.stats.fov_degrees)
+        else:
+            base = float(settings.FOV_DEFAULT_DEGREES)
+            vision_bonus = (self.stats.vision - 50) * settings.FOV_VISION_BONUS_PER_POINT
+            base += vision_bonus
+        return clamp(base, settings.FOV_MIN_DEGREES, settings.FOV_MAX_DEGREES)
+
+    @property
+    def fov_half_rad(self) -> float:
+        """Metade do FOV em radianos — usado para checagem de cone."""
+        return math.radians(self.calc_fov() / 2.0)
+
+    def is_within_fov(self, target_pos: tuple[float, float] | pygame.Vector2) -> bool:
+        """Verifica se uma posição está dentro do campo de visão do jogador.
+
+        Calcula o ângulo entre o vetor facing e a direção até o alvo.
+        Retorna True se o ângulo absoluto for menor que FOV/2.
+        """
+        if self.facing.length_squared() < 0.01:
+            return True  # Sem facing definido → tudo visível
+
+        direction = pygame.Vector2(target_pos[0] - self.pos.x,
+                                   target_pos[1] - self.pos.y)
+        if direction.length_squared() < 0.01:
+            return True  # Alvo na mesma posição → trivialmente visível
+
+        # Ângulo entre facing e direção ao alvo
+        angle = abs(self.facing.angle_to(direction))
+        if angle > 180:
+            angle = 360 - angle
+
+        return angle <= (self.calc_fov() / 2.0)
+
+    def rotate_towards(self, target_pos: tuple[float, float] | pygame.Vector2):
+        """Gira o jogador para encarar uma posição (sem mover)."""
+        direction = pygame.Vector2(target_pos[0] - self.pos.x,
+                                   target_pos[1] - self.pos.y)
+        if direction.length_squared() > 0.01:
+            self.facing = direction.normalize()
 
     def draw(self, surface: pygame.Surface):
         PlayerRenderer.draw(surface, self)

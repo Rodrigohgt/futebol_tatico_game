@@ -9,6 +9,7 @@ class InputEvent:
     def __init__(self):
         self.quit = False
         self.key_escape = False
+        self.key_space = False
         self.left_click: tuple[int, int] | None = None
         self.left_press: tuple[int, int] | None = None   # botão pressionado
         self.left_release: tuple[int, int] | None = None  # botão solto
@@ -43,6 +44,9 @@ class InputHandler:
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 result.key_escape = True
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                result.key_space = True
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 result.left_click = event.pos

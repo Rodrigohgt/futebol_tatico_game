@@ -20,6 +20,7 @@ class PlayerStats:
     composure: int = 50
     positioning: int = 50
     vision: int = 50
+    fov_degrees: int = 0  # 0 = calculado automaticamente
 
     def as_dict(self) -> dict[str, int]:
         return {
@@ -33,11 +34,14 @@ class PlayerStats:
             "composure": self.composure,
             "positioning": self.positioning,
             "vision": self.vision,
+            "fov_degrees": self.fov_degrees,
         }
 
     @property
     def overall(self) -> int:
-        vals = list(self.as_dict().values())
+        vals = [self.finishing, self.passing, self.pace, self.dribbling,
+                self.defending, self.heading, self.stamina, self.composure,
+                self.positioning, self.vision]
         return round(sum(vals) / len(vals))
 
 

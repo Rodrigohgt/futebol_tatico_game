@@ -32,7 +32,8 @@ class MatchScreen(Screen):
     def on_enter(self, **kwargs):
         """Inicializa uma nova partida reutilizando a surface do display."""
         surface = pygame.display.get_surface()
-        self._game = Game(surface=surface)
+        referee = kwargs.get("referee", None)
+        self._game = Game(surface=surface, referee=referee)
         self._event_queue.clear()
         self._pause_overlay.hide()
 
@@ -43,11 +44,12 @@ class MatchScreen(Screen):
 
     def handle_event(self, event: pygame.event.Event):
         """Acumula eventos para o Game processar no update."""
-        # ESC abre o overlay quando o jogo não está em pass_mode
+        # ESC abre o overlay quando o jogo não está em pass_mode nem em fase da IA
         if (event.type == pygame.KEYDOWN
                 and event.key == pygame.K_ESCAPE
                 and not self._pause_overlay.visible):
-            if self._game and self._game.passer.pass_mode:
+            if self._game and (self._game.passer.pass_mode
+                               or self._game._ai_phase_active):
                 self._event_queue.append(event)
             else:
                 self._pause_overlay.show()

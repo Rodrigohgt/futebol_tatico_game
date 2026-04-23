@@ -96,19 +96,23 @@ class UIRenderer:
         self._font_turn = pygame.font.SysFont(None, 24, bold=True)
         self._font_info = pygame.font.SysFont(None, 18)
         self._font_strategy = pygame.font.SysFont(None, 18)
+        self._font_referee = pygame.font.SysFont(None, 16)
 
     def update(self, mouse_pos):
         for btn in self._all_buttons:
             btn.update(mouse_pos)
 
     def draw(self, surface: pygame.Surface, turn: int, moved_count: int,
-             total: int, strategy_name: str = ""):
+             total: int, strategy_name: str = "", referee=None):
         self._draw_hud_bar(surface)
 
         for btn in self._all_buttons:
             btn.draw(surface)
 
         self._draw_turn_panel(surface, turn, moved_count, total, strategy_name)
+
+        if referee is not None:
+            self._draw_referee_panel(surface, referee)
 
     def _draw_hud_bar(self, surface: pygame.Surface):
         pygame.draw.rect(surface, settings.HUD_BG, self.hud_rect)
@@ -136,4 +140,38 @@ class UIRenderer:
 
         panel.blit(line1, (12, 6))
         panel.blit(line2, (12, 30))
+        surface.blit(panel, (px, py))
+
+    def _draw_referee_panel(self, surface, referee):
+        """Painel do árbitro no canto superior esquerdo."""
+        stats = referee.stats
+        tier_label = stats.tier_label
+
+        # Cor do tier
+        tier_colors = {
+            "FIFA": (255, 215, 0),      # dourado
+            "Série A": (180, 200, 220),  # prata
+            "Série B": (160, 160, 160),  # cinza
+        }
+        tier_color = tier_colors.get(tier_label, (170, 170, 180))
+
+        panel_w, panel_h = 230, 42
+        px, py = 12, 6
+
+        panel = pygame.Surface((panel_w, panel_h), pygame.SRCALPHA)
+        pygame.draw.rect(panel, (20, 20, 30, 200),
+                         (0, 0, panel_w, panel_h), border_radius=8)
+
+        # Linha 1: nome do árbitro
+        name_surf = self._font_referee.render(
+            f"Árbitro: {referee.name}", True, (210, 210, 220))
+        panel.blit(name_surf, (10, 4))
+
+        # Linha 2: tier + faltas + cartões
+        tier_surf = self._font_referee.render(tier_label, True, tier_color)
+        info_txt = f"  |  Faltas: {referee.fouls_called}  Cartões: {referee.cards_given}"
+        info_surf = self._font_referee.render(info_txt, True, (150, 150, 165))
+        panel.blit(tier_surf, (10, 22))
+        panel.blit(info_surf, (10 + tier_surf.get_width(), 22))
+
         surface.blit(panel, (px, py))

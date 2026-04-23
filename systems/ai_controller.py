@@ -116,6 +116,40 @@ class AIController:
 
         return moved_count
 
+    def calc_turn_budget(
+        self,
+        ball: Ball,
+        human_players: list[Player],
+        rival_players: list[Player],
+    ) -> int:
+        """Calcula e retorna o budget de ações para a fase de turno da IA."""
+        ctx = self.build_context(ball, human_players, rival_players)
+        return self._calc_turn_budget(ctx)
+
+    def execute_single_action(
+        self,
+        ball: Ball,
+        human_players: list[Player],
+        rival_players: list[Player],
+    ) -> Player | None:
+        """Executa uma única ação da IA (pressão ou tática). Retorna o jogador movido."""
+        ctx = self.build_context(ball, human_players, rival_players)
+
+        # Prioridade: pressionar portador da bola
+        if ctx.ball_owner_is_human and ctx.ball_is_held:
+            moved = self._pressure_ball_carrier(ctx)
+            if moved:
+                return self._find_moved_player(ctx.rival_players)
+
+        # Fallback: melhor ação tática
+        result = self.ai.react(rival_players, human_players, ctx)
+        return result
+
+    def _find_moved_player(self, rival_players: list[Player]) -> Player | None:
+        """Encontra o jogador que acabou de se mover (menor meters remaining)."""
+        moved = [p for p in rival_players if not p.can_move() and p.info.position != "GK"]
+        return moved[-1] if moved else None
+
     def reset_turn(self):
         self.moves_remaining = settings.AI_MOVES_PER_TURN
         self.passes_remaining = settings.AI_PASSES_PER_TURN

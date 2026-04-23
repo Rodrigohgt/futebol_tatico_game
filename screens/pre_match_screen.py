@@ -12,8 +12,10 @@ import pygame
 
 from config import settings
 from screens.screen_manager import Screen
+from entities.referee import Referee, generate_referee
 from screens.ui_components import (
     ClubCard,
+    RefereeCard,
     UIButton,
     UIColors,
     UIPanel,
@@ -67,6 +69,10 @@ class PreMatchScreen(Screen):
 
         # Estado
         self._selected_club: int | None = None
+        self._selected_referee: int | None = None  # índice no _referee_cards
+
+        # Pool de árbitros gerados
+        self._referees: list[Referee] = []
 
         # Fontes (inicializadas em on_enter)
         self._font_header: pygame.font.Font | None = None
@@ -77,6 +83,8 @@ class PreMatchScreen(Screen):
         # Componentes (construídos em _build_layout)
         self._club_panel: UIPanel | None = None
         self._club_cards: list[ClubCard] = []
+        self._referee_panel: UIPanel | None = None
+        self._referee_cards: list[RefereeCard] = []
         self._btn_start: UIButton | None = None
         self._btn_back: UIButton | None = None
 
@@ -88,6 +96,14 @@ class PreMatchScreen(Screen):
 
     def on_enter(self, **kwargs):
         self._selected_club = None
+        self._selected_referee = None
+
+        # Gera 3 árbitros aleatórios (um de cada tier)
+        self._referees = [
+            generate_referee(tier="elite"),
+            generate_referee(tier="experienced"),
+            generate_referee(tier="developing"),
+        ]
 
         if self._font_header is None:
             self._font_header = pygame.font.SysFont(None, 44, bold=True)
@@ -99,6 +115,7 @@ class PreMatchScreen(Screen):
 
     def on_exit(self):
         self._selected_club = None
+        self._selected_referee = None
 
     # ───────────────────────────────────────────
     #  Layout builder
@@ -114,12 +131,14 @@ class PreMatchScreen(Screen):
         footer_h = 70
         content_top = header_h + 10
         content_bottom = sh - footer_h - 10
+        available_h = content_bottom - content_top
+        panel_gap = 10
 
-        # ── Painel de seleção de clube ──
+        # ── Painel de seleção de clube (60% do espaço) ──
         panel_w = sw - mx * 2
-        panel_h = min(content_bottom - content_top, 420)
+        club_h = min(int(available_h * 0.58), 300)
         self._club_panel = UIPanel(
-            pygame.Rect(mx, content_top, panel_w, panel_h),
+            pygame.Rect(mx, content_top, panel_w, club_h),
             title="Selecione seu Clube",
             title_font=self._font_section,
         )
@@ -127,7 +146,7 @@ class PreMatchScreen(Screen):
         # ── Cards de clube ──
         cr = self._club_panel.content_rect
         card_w = min(200, (cr.width - 40) // 2)
-        card_h = min(250, cr.height - 20)
+        card_h = min(220, cr.height - 10)
         gap = 40
         total_w = card_w * 2 + gap
         start_x = cr.x + (cr.width - total_w) // 2
@@ -144,6 +163,42 @@ class PreMatchScreen(Screen):
                 club["variant"],
             )
             self._club_cards.append(card)
+
+        # ── Painel de seleção de árbitro (resto do espaço) ──
+        ref_top = content_top + club_h + panel_gap
+        ref_h = content_bottom - ref_top
+        self._referee_panel = UIPanel(
+            pygame.Rect(mx, ref_top, panel_w, ref_h),
+            title="Selecione o Árbitro",
+            title_font=self._font_section,
+        )
+
+        # ── Cards de árbitro ──
+        rr = self._referee_panel.content_rect
+        num_cards = len(self._referees) + 1  # +1 para "Aleatório"
+        ref_card_w = min(140, (rr.width - (num_cards - 1) * 12) // num_cards)
+        ref_card_h = min(130, rr.height - 8)
+        ref_gap = 12
+        total_ref_w = ref_card_w * num_cards + ref_gap * (num_cards - 1)
+        ref_start_x = rr.x + (rr.width - total_ref_w) // 2
+        ref_card_y = rr.y + (rr.height - ref_card_h) // 2
+
+        self._referee_cards = []
+        for i, ref in enumerate(self._referees):
+            rect = pygame.Rect(
+                ref_start_x + i * (ref_card_w + ref_gap),
+                ref_card_y, ref_card_w, ref_card_h,
+            )
+            self._referee_cards.append(RefereeCard(rect, ref))
+
+        # Card "Aleatório"
+        random_rect = pygame.Rect(
+            ref_start_x + len(self._referees) * (ref_card_w + ref_gap),
+            ref_card_y, ref_card_w, ref_card_h,
+        )
+        self._referee_cards.append(
+            RefereeCard(random_rect, None, is_random=True)
+        )
 
         # ── Botões do footer ──
         btn_w = 180
@@ -170,6 +225,9 @@ class PreMatchScreen(Screen):
         )
 
         self._built = True
+
+        # Pré-seleciona "Aleatório" por padrão (após botões criados)
+        self._select_referee(len(self._referee_cards) - 1)
 
     # ───────────────────────────────────────────
     #  Events
@@ -209,12 +267,31 @@ class PreMatchScreen(Screen):
             if card.handle_event(event):
                 self._select_club(i)
 
+        # Cards de árbitro
+        for i, card in enumerate(self._referee_cards):
+            if card.handle_event(event):
+                self._select_referee(i)
+
     def _select_club(self, index: int):
         """Atualiza a seleção de clube."""
         self._selected_club = index
         for i, card in enumerate(self._club_cards):
             card.selected = (i == index)
-        self._btn_start.enabled = True
+        self._update_start_button()
+
+    def _select_referee(self, index: int):
+        """Atualiza a seleção de árbitro."""
+        self._selected_referee = index
+        for i, card in enumerate(self._referee_cards):
+            card.selected = (i == index)
+        self._update_start_button()
+
+    def _update_start_button(self):
+        """Habilita botão Iniciar quando clube e árbitro estão selecionados."""
+        self._btn_start.enabled = (
+            self._selected_club is not None
+            and self._selected_referee is not None
+        )
 
     # ───────────────────────────────────────────
     #  Actions
@@ -224,10 +301,18 @@ class PreMatchScreen(Screen):
         self._sm.switch("main_menu")
 
     def _on_start(self):
-        if self._selected_club is None:
+        if self._selected_club is None or self._selected_referee is None:
             return
         club = CLUBS[self._selected_club]
-        self._sm.switch("match", selected_club=club)
+
+        # Resolve árbitro selecionado
+        card = self._referee_cards[self._selected_referee]
+        if card.is_random:
+            referee = generate_referee()
+        else:
+            referee = card.referee
+
+        self._sm.switch("match", selected_club=club, referee=referee)
 
     # ───────────────────────────────────────────
     #  Update
@@ -237,6 +322,8 @@ class PreMatchScreen(Screen):
         if not self._built:
             return
         for card in self._club_cards:
+            card.update(dt)
+        for card in self._referee_cards:
             card.update(dt)
 
     # ───────────────────────────────────────────
@@ -269,7 +356,7 @@ class PreMatchScreen(Screen):
             (40, 76), (sw - 40, 76),
         )
 
-        # ── Painel de seleção ──
+        # ── Painel de seleção de clube ──
         self._club_panel.render(surface)
         for card in self._club_cards:
             card.render(surface)
@@ -283,6 +370,11 @@ class PreMatchScreen(Screen):
             vs_surf = vs_font.render("VS", True, UIColors.TEXT_MUTED)
             vs_rect = vs_surf.get_rect(center=(mid_x, mid_y))
             surface.blit(vs_surf, vs_rect)
+
+        # ── Painel de seleção de árbitro ──
+        self._referee_panel.render(surface)
+        for card in self._referee_cards:
+            card.render(surface)
 
         # ── Linha divisória footer ──
         footer_line_y = sh - 74
